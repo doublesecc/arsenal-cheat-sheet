@@ -13,9 +13,14 @@ sudo nmap -v -sS -sV -sC -T4 -p- -oA <output_file|nmap/tcp_full_scan> <ip>
 
 #platform/linux #target/local #cat/code_review #tag/scan
 
-## semgrep - webapp  local code review
+## semgrep - webapp local code review
 ```
 semgrep --config "p/security-audit" --config "p/owasp-top-ten" --config "p/javascript" --metrics off <source_code>
+```
+
+## semgrep - java webapp
+```
+semgrep --config "p/security-audit" --config "p/owasp-top-ten" --config "p/java" --config "p/secrets" --config "p/clientside-js" --config "p/sql-injection" --config "p/command-injection" --config "p/insecure-transport" -v --metrics off -o semgrep_<file>.md <source_code>
 ```
 
 # xfreerdp
