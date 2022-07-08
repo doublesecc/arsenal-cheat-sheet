@@ -1,53 +1,54 @@
 # nmap
 % nmap
 
-#platform/linux #target/remote #cat/RECON #tag/scan
+#plateform/linux #target/remote #cat/RECON #tag/scan
 
 ## nmap - full tcp syn, service version and default scripts, output to file
 ```
 sudo nmap -v -sS -sV -sC -T4 -p- -oA <output_file|nmap/tcp_full_scan> <ip>
 ```
-#SMB
-%smb
 
-#platform/linux #target/remote #cat/RECON/CONNECT
+# SMB
+% smb
 
-## SMB Client - list shares
+#plateform/linux #target/remote #cat/ATTACK/CONNECT
+
+## smbclient - list shares
 ```
 smbclient -L //<ip> -U <user>
 ```
 
-## SMB Client - connect to share
+## smbclient - connect to share
 ```
 smbclient //<ip>/<sharename>
 ```
 
-## SMB Map - list shares
+## smbmap - list shares
 ```
 smbmap -H <ip>
 ```
 
-## SMB Map - list shares with null authentication
+## smbmap - list shares with null authentication
 ```
 smbmap -u null -p "" -H <ip>
 ```
 
-## SMB Map - list all contents of share with no authentication
+## smbmap - list all contents of share with no authentication
 ```
 smbmap -R <sharename> -H <ip>
 ```
 
-## SMB Map - download specific file from share (might not save to local dir, updatedb, locate file)
+## smbmap - download specific file from share (might not save to local dir, updatedb, locate file)
 ```
 smbmap -R <sharename> -H <ip> -A '<file>' -q
 ```
 
 # Mount
-%mount
+% mount
 
-#platform/linux #target/remote #cat/RECON/CONNECT
+#plateform/linux #target/remote #cat/ATTACK/CONNECT
 
-## Mount - mount share
+## mount - mount share
 ```
 mount -t cifs -o username=<username>,password=<password> //<ip>/"<sharename>" <local_dir>
 ```
@@ -55,7 +56,7 @@ mount -t cifs -o username=<username>,password=<password> //<ip>/"<sharename>" <l
 # semgrep
 % code_review
 
-#platform/linux #target/local #cat/code_review #tag/scan
+#platfeorm/linux #target/local #cat/code_review #tag/scan
 
 ## semgrep - webapp local code review
 ```
@@ -70,7 +71,7 @@ semgrep --config "p/security-audit" --config "p/owasp-top-ten" --config "p/java"
 # xfreerdp
 % rdp, windows, 3389
 
-#platform/linux #target/remote #protocol/rdp #port/3389 #cat/ATTACK/CONNECT
+#plateform/linux #target/remote #protocol/rdp #port/3389 #cat/ATTACK/CONNECT
 
 ## xfreerdp - share clipboard
 ```
@@ -80,7 +81,7 @@ xfreerdp /v:<ip> /u:<user> /p:<password> /cert-ignore +clipboard
 # Haiti
 % password recovery, password cracking
 
-#platform/linux #target/local #cat/CRACKING/PASSWORD 
+#plateform/linux #target/local #cat/CRACKING/PASSWORD 
 
 ## Haiti - Identify hash from file
 ```
@@ -95,7 +96,7 @@ haiti -e <hash|hash>
 # Hashid
 % password recovery, password cracking
 
-#platform/linux #target/local #cat/CRACKING/PASSWORD 
+#plateform/linux #target/local #cat/CRACKING/PASSWORD 
 
 ## Hashid - Identify hash
 ```
@@ -105,7 +106,7 @@ hashid <hash>
 # john
 % password recovery, password cracking
 
-#platform/linux #target/local #cat/CRACKING/PASSWORD
+#plateform/linux #target/local #cat/CRACKING/PASSWORD
 
 ## John - Convert RAR to crackable hash
 ```
@@ -201,7 +202,7 @@ john --wordlist=<wordlist|/usr/share/wordlists/rockyou.txt> --format=krb5tgs <ha
 # TGS Rep Crack
 % password recovery, password cracking
 
-#platform/linux #target/local #cat/CRACKING/PASSWORD 
+#plateform/linux #target/local #cat/CRACKING/PASSWORD 
 
 ## TGS Rep Crack - Crack TGS Responses containing hashed service password
 ```
@@ -211,7 +212,7 @@ john --wordlist=<wordlist|/usr/share/wordlists/rockyou.txt> --format=krb5tgs <ha
 # GPP
 % password recovery, password cracking
 
-#platform/linux #target/local #cat/CRACKING/PASSWORD 
+#plateform/linux #target/local #cat/CRACKING/PASSWORD 
 ## GPP Decrypt - Decrypt Group Policy Preferences (GPP) encrypted strings
 ```
 gpp-decrypt <string>
