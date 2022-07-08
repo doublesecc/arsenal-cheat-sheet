@@ -7,6 +7,50 @@
 ```
 sudo nmap -v -sS -sV -sC -T4 -p- -oA <output_file|nmap/tcp_full_scan> <ip>
 ```
+#SMB
+%smb
+
+#platform/linux #target/remote #cat/RECON/CONNECT
+
+## SMB Client - list shares
+```
+smbclient -L //<ip> -U <user>
+```
+
+## SMB Client - connect to share
+```
+smbclient //<ip>/<sharename>
+```
+
+## SMB Map - list shares
+```
+smbmap -H <ip>
+```
+
+## SMB Map - list shares with null authentication
+```
+smbmap -u null -p "" -H <ip>
+```
+
+## SMB Map - list all contents of share with no authentication
+```
+smbmap -R <sharename> -H <ip>
+```
+
+## SMB Map - download specific file from share (might not save to local dir, updatedb, locate file)
+```
+smbmap -R <sharename> -H <ip> -A '<file>' -q
+```
+
+# Mount
+%mount
+
+#platform/linux #target/remote #cat/RECON/CONNECT
+
+## Mount - mount share
+```
+mount -t cifs -o username=<username>,password=<password> //<ip>/"<sharename>" <local_dir>
+```
 
 # semgrep
 % code_review
